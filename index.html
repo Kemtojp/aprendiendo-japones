@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiragana y Katakana</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="showReference">Referencia</button>
+    <div id="referenceOverlay">
+        <img src="img/hiragana-katakana-kanji.jpg" alt="Referencia">
+    </div>
+
+    <div id="selectionScreen">
+        <h1>Elige tu conjunto</h1>
+        <button id="hiraganaButton" class="groupButton">Hiragana</button>
+        <button id="katakanaButton" class="groupButton">Katakana</button>
+    </div>
+
+    <div id="mainApp" style="display: none;">
+        <h1>Escribe sobre la silueta</h1>
+        <div id="canvasContainer">
+            <canvas id="drawingCanvas" width="500" height="500"></canvas>
+            <button id="clearButton">Limpiar</button>
+            <button id="nextButton">Siguiente</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
