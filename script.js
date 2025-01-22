@@ -11,8 +11,15 @@ const showReferenceButton = document.getElementById("showReference");
 const groupContainer = document.createElement("div");
 const backButton = document.createElement("button");
 
+const cardContainer = document.createElement("div");
+const cardImage = document.createElement("img");
+const cardPrevButton = document.createElement("button");
+const cardNextButton = document.createElement("button");
+const cardButton = document.createElement("button");
+
 let currentGroup = [];
 let currentIndex = 0;
+let currentCardIndex = 1;
 let isDrawing = false;
 let lastX = null;
 let lastY = null;
@@ -22,6 +29,77 @@ backButton.textContent = "Volver";
 backButton.classList.add("backButton");
 backButton.style.display = "none";
 document.body.appendChild(backButton);
+
+// Configuración inicial del contenedor de cards
+cardContainer.style.display = "none";
+cardContainer.style.flexDirection = "column";
+cardContainer.style.alignItems = "center";
+cardContainer.style.marginTop = "20px";
+
+cardImage.style.maxWidth = "90%";
+cardImage.style.border = "2px solid #333";
+cardImage.style.borderRadius = "10px";
+
+cardPrevButton.textContent = "Anterior";
+cardNextButton.textContent = "Siguiente";
+
+cardPrevButton.style.margin = "10px";
+cardNextButton.style.margin = "10px";
+cardPrevButton.style.padding = "10px 20px";
+cardNextButton.style.padding = "10px 20px";
+cardPrevButton.style.backgroundColor = "#007bff";
+cardNextButton.style.backgroundColor = "#007bff";
+cardPrevButton.style.color = "white";
+cardNextButton.style.color = "white";
+cardPrevButton.style.border = "none";
+cardNextButton.style.border = "none";
+cardPrevButton.style.borderRadius = "5px";
+cardNextButton.style.borderRadius = "5px";
+
+cardContainer.appendChild(cardImage);
+cardContainer.appendChild(cardPrevButton);
+cardContainer.appendChild(cardNextButton);
+document.body.appendChild(cardContainer);
+
+function updateCardImage(characterGroup, index) {
+    const folder = characterGroup === hiraganaGroups ? "hiragana" : "katakana";
+    cardImage.src = `img/${folder}/${folder}-${index}.jpg`;
+}
+
+// Función para actualizar la imagen del card
+function updateCardImage(folder, index) {
+    cardImage.src = `img/${folder}/${folder.toLowerCase()}-(${index}).jpg`;
+}
+
+// Función para actualizar la imagen del card
+function updateCardImage(folder, index) {
+    cardImage.src = `img/${folder}/${folder.toLowerCase()}-(${index}).jpg`;
+}
+
+// Mostrar las "cards" al hacer clic en el botón "Ver Cards"
+cardButton.addEventListener("click", () => {
+    console.log("Mostrando las cards");
+    cardDisplay.style.display = "block";
+    cardContainer.style.display = "flex";
+    currentCardIndex = 1; // Mostrar la primera card
+    updateCardImage(currentGroup, currentCardIndex); // Asegúrate de que esta función esté bien configurada
+});
+
+// Manejar botón "Anterior" para los cards
+cardPrevButton.addEventListener("click", () => {
+    if (currentCardIndex > 1) {
+        currentCardIndex--;
+        updateCardImage(currentGroup, currentCardIndex);
+    }
+});
+
+// Manejar botón "Siguiente" para los cards
+cardNextButton.addEventListener("click", () => {
+    if (currentCardIndex < 46) {
+        currentCardIndex++;
+        updateCardImage(currentGroup, currentCardIndex);
+    }
+});
 
 // Grupos de caracteres
 const hiraganaGroups = [
@@ -62,12 +140,13 @@ const katakanaGroups = [
 
 // Crear botones dinámicos para los grupos de letras
 function createGroupButtons(groups) {
-    groupContainer.innerHTML = "";
-    groups.forEach((group) => {
+    groupContainer.innerHTML = ""; // Limpiar cualquier botón anterior
+    groups.forEach((group, index) => {
         const button = document.createElement("button");
         button.textContent = group.join(""); // Mostrar las letras del grupo
         button.classList.add("groupButton");
         button.addEventListener("click", () => {
+            console.log(`Grupo ${index + 1} seleccionado`);
             currentGroup = group;
             currentIndex = 0;
             drawGuideCharacter(currentGroup[currentIndex]);
@@ -76,10 +155,11 @@ function createGroupButtons(groups) {
         });
         groupContainer.appendChild(button);
     });
+
+    document.body.appendChild(groupContainer);
     groupContainer.style.display = "block";
     mainApp.style.display = "none";
-    backButton.style.display = "block"; // Mostrar el botón "Volver" en el selector
-    document.body.appendChild(groupContainer);
+    backButton.style.display = "block"; // Mostrar el botón "Volver"
 }
 
 // Dibujar silueta
@@ -187,12 +267,14 @@ backButton.addEventListener("click", () => {
 hiraganaButton.addEventListener("click", () => {
     createGroupButtons(hiraganaGroups);
     selectionScreen.style.display = "none";
+    cardButton.style.display = "block"; // Mostrar botón "Ver Cards"
 });
 
 // Seleccionar Katakana
 katakanaButton.addEventListener("click", () => {
     createGroupButtons(katakanaGroups);
     selectionScreen.style.display = "none";
+    cardButton.style.display = "block"; // Mostrar botón "Ver Cards"
 });
 
 // Mostrar y ocultar referencia

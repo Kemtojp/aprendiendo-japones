@@ -7,23 +7,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Botón de referencia y overlay -->
     <button id="showReference">Referencia</button>
     <div id="referenceOverlay">
         <img src="img/hiragana-katakana-kanji.jpg" alt="Referencia">
     </div>
 
+    <!-- Pantalla de selección -->
     <div id="selectionScreen">
         <h1>Elige tu conjunto</h1>
         <button id="hiraganaButton" class="groupButton">Hiragana</button>
         <button id="katakanaButton" class="groupButton">Katakana</button>
     </div>
 
+    <!-- Área principal de la aplicación -->
     <div id="mainApp" style="display: none;">
         <h1>Escribe sobre la silueta</h1>
         <div id="canvasContainer">
             <canvas id="drawingCanvas" width="500" height="500"></canvas>
             <button id="clearButton">Limpiar</button>
             <button id="nextButton">Siguiente</button>
+        </div>
+    </div>
+
+    <!-- Contenedor de los "cards" -->
+    <div id="cardDisplay" style="display: none;">
+        <div id="cardContainer">
+            <!-- El contenido del contenedor (imagen y botones) se genera dinámicamente en el script -->
         </div>
     </div>
 
