@@ -11,12 +11,6 @@ const showReferenceButton = document.getElementById("showReference");
 const groupContainer = document.createElement("div");
 const backButton = document.createElement("button");
 
-const cardContainer = document.createElement("div");
-const cardImage = document.createElement("img");
-const cardPrevButton = document.createElement("button");
-const cardNextButton = document.createElement("button");
-const cardButton = document.createElement("button");
-
 let currentGroup = [];
 let currentIndex = 0;
 let currentCardIndex = 1;
@@ -29,77 +23,6 @@ backButton.textContent = "Volver";
 backButton.classList.add("backButton");
 backButton.style.display = "none";
 document.body.appendChild(backButton);
-
-// Configuración inicial del contenedor de cards
-cardContainer.style.display = "none";
-cardContainer.style.flexDirection = "column";
-cardContainer.style.alignItems = "center";
-cardContainer.style.marginTop = "20px";
-
-cardImage.style.maxWidth = "90%";
-cardImage.style.border = "2px solid #333";
-cardImage.style.borderRadius = "10px";
-
-cardPrevButton.textContent = "Anterior";
-cardNextButton.textContent = "Siguiente";
-
-cardPrevButton.style.margin = "10px";
-cardNextButton.style.margin = "10px";
-cardPrevButton.style.padding = "10px 20px";
-cardNextButton.style.padding = "10px 20px";
-cardPrevButton.style.backgroundColor = "#007bff";
-cardNextButton.style.backgroundColor = "#007bff";
-cardPrevButton.style.color = "white";
-cardNextButton.style.color = "white";
-cardPrevButton.style.border = "none";
-cardNextButton.style.border = "none";
-cardPrevButton.style.borderRadius = "5px";
-cardNextButton.style.borderRadius = "5px";
-
-cardContainer.appendChild(cardImage);
-cardContainer.appendChild(cardPrevButton);
-cardContainer.appendChild(cardNextButton);
-document.body.appendChild(cardContainer);
-
-function updateCardImage(characterGroup, index) {
-    const folder = characterGroup === hiraganaGroups ? "hiragana" : "katakana";
-    cardImage.src = `img/${folder}/${folder}-${index}.jpg`;
-}
-
-// Función para actualizar la imagen del card
-function updateCardImage(folder, index) {
-    cardImage.src = `img/${folder}/${folder.toLowerCase()}-(${index}).jpg`;
-}
-
-// Función para actualizar la imagen del card
-function updateCardImage(folder, index) {
-    cardImage.src = `img/${folder}/${folder.toLowerCase()}-(${index}).jpg`;
-}
-
-// Mostrar las "cards" al hacer clic en el botón "Ver Cards"
-cardButton.addEventListener("click", () => {
-    console.log("Mostrando las cards");
-    cardDisplay.style.display = "block";
-    cardContainer.style.display = "flex";
-    currentCardIndex = 1; // Mostrar la primera card
-    updateCardImage(currentGroup, currentCardIndex); // Asegúrate de que esta función esté bien configurada
-});
-
-// Manejar botón "Anterior" para los cards
-cardPrevButton.addEventListener("click", () => {
-    if (currentCardIndex > 1) {
-        currentCardIndex--;
-        updateCardImage(currentGroup, currentCardIndex);
-    }
-});
-
-// Manejar botón "Siguiente" para los cards
-cardNextButton.addEventListener("click", () => {
-    if (currentCardIndex < 46) {
-        currentCardIndex++;
-        updateCardImage(currentGroup, currentCardIndex);
-    }
-});
 
 // Grupos de caracteres
 const hiraganaGroups = [
@@ -261,20 +184,34 @@ backButton.addEventListener("click", () => {
     }
 });
 
-
-
 // Seleccionar Hiragana
 hiraganaButton.addEventListener("click", () => {
     createGroupButtons(hiraganaGroups);
     selectionScreen.style.display = "none";
-    cardButton.style.display = "block"; // Mostrar botón "Ver Cards"
+
+    // Agregar botón para ver imágenes de Hiragana
+    const hiraganaImagesButton = document.createElement("button");
+    hiraganaImagesButton.textContent = "Ver Hiragana (Imágenes)";
+    hiraganaImagesButton.classList.add("imageButton");
+    hiraganaImagesButton.addEventListener("click", () => {
+        showCardViewer("hiragana");
+    });
+    document.body.appendChild(hiraganaImagesButton);
 });
 
 // Seleccionar Katakana
 katakanaButton.addEventListener("click", () => {
     createGroupButtons(katakanaGroups);
     selectionScreen.style.display = "none";
-    cardButton.style.display = "block"; // Mostrar botón "Ver Cards"
+
+    // Agregar botón para ver imágenes de Katakana
+    const katakanaImagesButton = document.createElement("button");
+    katakanaImagesButton.textContent = "Ver Katakana (Imágenes)";
+    katakanaImagesButton.classList.add("imageButton");
+    katakanaImagesButton.addEventListener("click", () => {
+        showCardViewer("katakana");
+    });
+    document.body.appendChild(katakanaImagesButton);
 });
 
 // Mostrar y ocultar referencia
