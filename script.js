@@ -17,6 +17,7 @@ let currentCardIndex = 1;
 let isDrawing = false;
 let lastX = null;
 let lastY = null;
+let activeButton = null;
 
 // Crear el botón "Volver" y ocultarlo por defecto
 backButton.textContent = "Volver";
@@ -189,14 +190,20 @@ hiraganaButton.addEventListener("click", () => {
     createGroupButtons(hiraganaGroups);
     selectionScreen.style.display = "none";
 
-    // Agregar botón para ver imágenes de Hiragana
+    // Eliminar cualquier botón activo antes de crear uno nuevo
+    if (activeButton) activeButton.remove();
+
+    // Crear botón de Hiragana
     const hiraganaImagesButton = document.createElement("button");
     hiraganaImagesButton.textContent = "Ver Hiragana (Imágenes)";
-    hiraganaImagesButton.classList.add("imageButton");
+    hiraganaImagesButton.classList.add("hiraganaImagesButton");
     hiraganaImagesButton.addEventListener("click", () => {
         showCardViewer("hiragana");
     });
     document.body.appendChild(hiraganaImagesButton);
+
+    // Marcar como botón activo
+    activeButton = hiraganaImagesButton;
 });
 
 // Seleccionar Katakana
@@ -204,15 +211,32 @@ katakanaButton.addEventListener("click", () => {
     createGroupButtons(katakanaGroups);
     selectionScreen.style.display = "none";
 
-    // Agregar botón para ver imágenes de Katakana
+    // Eliminar cualquier botón activo antes de crear uno nuevo
+    if (activeButton) activeButton.remove();
+
+    // Crear botón de Katakana
     const katakanaImagesButton = document.createElement("button");
     katakanaImagesButton.textContent = "Ver Katakana (Imágenes)";
-    katakanaImagesButton.classList.add("imageButton");
+    katakanaImagesButton.classList.add("katakanaImagesButton");
     katakanaImagesButton.addEventListener("click", () => {
         showCardViewer("katakana");
     });
     document.body.appendChild(katakanaImagesButton);
+
+    // Marcar como botón activo
+    activeButton = katakanaImagesButton;
 });
+
+// Limpiar la vista al volver a la pantalla inicial
+function resetView() {
+    selectionScreen.style.display = "block";
+
+    // Eliminar cualquier botón activo
+    if (activeButton) {
+        activeButton.remove();
+        activeButton = null;
+    }
+}
 
 // Mostrar y ocultar referencia
 showReferenceButton.addEventListener("click", () => {
